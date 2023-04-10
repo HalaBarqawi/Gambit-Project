@@ -1,32 +1,22 @@
-import './assets/App.css';
-import React , {useState, useEffect} from 'react'
-import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginProvider from './context/AuthContext';
+import AdminHome from './pages/Adminpage';
+import Home from './pages/home';
+import Login from './pages/login';
+import Signup from './pages/signup';
 
-function App() {
-  const[data, setData]=useState('');
-  useEffect(()=>{
-  async function fetchName() {
-    try{ 
-       await axios.get('http://localhost:8080/getName')
-      .then(result =>{
-        setData(result.data.data)
-        console.log(result.data)
-      }
-        )
-      .catch(error => console.log(error))
-    }
-    catch(error){
-      console.log(error)
-    }
-    }
-fetchName();
-},[]);
+export default function App() {
   return (
-    <div className="App">
-             Hello , I am {data} 
+    <LoginProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Admin" element={<AdminHome />} />
 
-    </div>
+      </Routes>
+    </Router>
+    </LoginProvider>
   );
 }
-
-export default App;
