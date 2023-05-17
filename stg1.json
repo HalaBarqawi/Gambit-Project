@@ -1,0 +1,10 @@
+{
+    "database":
+    {
+        "DB_HOST": "db_stg1",
+        "DB_PORT": 3306,
+        "MYSQL_DB": "stg1",
+        "DB_USER": "gambit_stg1",
+        "DB_PASS": "changeMeCp"
+    }
+}

@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  db_stg1:
+    image: mysql:8
+    container_name: gb_mysql_database_container
+    environment:
+     - MYSQL_ROOT_PASSWORD=changeMe
+     - MYSQL_DATABASE=gambit_stg1
+     - MYSQL_USER=stg1
+     - MYSQL_PASSWORD=changeMeCp
+    
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql8:/var/lib/mysql
+    networks:
+      - gb-bridge-network
+
+volumes:
+  mysql8:
+
+networks:
+  gb-bridge-network:
+    external: true

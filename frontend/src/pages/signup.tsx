@@ -54,7 +54,7 @@ const Signup: React.FC = () => {
 
     const onFinish = async (values: any) => {
         console.log('Received values of form: ', values);
-        const res = await axios.post('http://localhost:8080/signup', {
+        const res = await axios.post('http://localhost:8081/signup', {
             Email: values.email, UserName: values.UserName,
             FirstName: values.FirstName, LastName: values.LastName, Password: values.password
         });

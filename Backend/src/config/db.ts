@@ -1,9 +1,26 @@
-import { Sequelize } from "sequelize";
+// import { Sequelize } from 'sequelize';
+
+// const sequelize = new Sequelize(
+//     'customer_pref',
+//     'cp',
+//     'changeMeCp',
+//     {
+//         dialect: 'mysql',
+//         host: "db",
+//     }
+// );
 
 
-    const sequelize = new Sequelize(process.env.MYSQL_DB!, process.env.DB_USER!, "", {
-        dialect: "mysql",
-        host: process.env.DB_HOST || 'localhost'
-    });
 
-export {sequelize} ;
+const { Sequelize } = require('sequelize');
+import config from 'config';
+
+const configuration:any = config.get('database');
+
+const sequelize = new Sequelize(configuration.DB_USER, configuration.MYSQL_DB, configuration.DB_PASS, {
+  dialect:'mysql',
+  host: configuration.DB_HOST,
+//   logging: configuration.logging,
+});
+
+export { sequelize };

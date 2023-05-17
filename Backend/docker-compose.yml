@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  
+  serverr:
+    container_name: api
+    environment:
+       NODE_ENV: stg1
+       PORT: 8081
+    build:
+      context: ./
+    image: api
+    ports:
+      - 8081:8081
+    volumes:
+      - ../stg1.json:/app/config/stg1.json
+
+
+    networks:
+      - gb-bridge-network
+networks:
+  gb-bridge-network:
+    external: true
+
