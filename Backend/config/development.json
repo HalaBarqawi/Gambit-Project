@@ -1,0 +1,10 @@
+{
+    "database":
+    {
+        "DB_HOST": "db",
+        "DB_PORT": 3306,
+        "MYSQL_DB": "cp",
+        "DB_USER": "customer_pref",
+        "DB_PASS": "changeMeCp"
+    }
+}
