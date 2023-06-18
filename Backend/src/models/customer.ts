@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
+import { Preference } from './preferences';
 
 export interface CustomerAttributes {
   Id: number;
@@ -84,8 +85,10 @@ Customer.init(
     sequelize,
     modelName: 'Customer',
     tableName: 'customers',
+
   }
 );
+Customer.hasMany(Preference, { onDelete: 'cascade', foreignKey:  "customerId" });
 
 (async () => {
   await sequelize.sync({  });
