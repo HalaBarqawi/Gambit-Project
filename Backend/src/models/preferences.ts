@@ -35,8 +35,8 @@ Preference.init({
 
     },
     customerId:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
+        type: DataTypes.INTEGER
+        
     }
 },{
     createdAt: false,

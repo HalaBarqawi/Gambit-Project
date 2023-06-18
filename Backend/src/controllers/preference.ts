@@ -5,6 +5,7 @@ import {
   AddService,
   DeleteService,
   EditService,
+  ViewAService,
   ViewService,
 } from '../service/preference';
 
@@ -19,6 +20,15 @@ export async function view_Pref(req: Request & any, res: Response) {
     .send({ msg: 'Preferences  found!', content: Result[1] });
 }
 
+export async function view_Apref(req: Request & any, res: Response) {
+  let Result: any = await ViewAService(req.params.id, req.user.Id);
+  if (!Result[0]) {
+    return res.status(404).send({ msg: Result[1] });
+  }
+  return res
+    .status(200)
+    .send({ msg: 'Preferences  found!', content: Result[1] });
+}
 export async function Add_Pref(req: Request & any, res: Response) {
   const body = req.body;
   const preference: any = await AddService(body, req.user.Id);
@@ -27,6 +37,7 @@ export async function Add_Pref(req: Request & any, res: Response) {
       .status(200)
       .send({ msg: 'Preferences  found!', content: preference[1] });
   }
+  return res.send('failed');
 }
 
 export async function Edit_Pref(req: Request & any, res: Response) {
