@@ -11,7 +11,7 @@ export async function postTrans(body: TransAttributes) {
       return false;
     }
 
-    const trans = await new Trans(body);
+    const trans = new Trans(body);
     await trans.save();
     return trans;
   } catch (e) {
