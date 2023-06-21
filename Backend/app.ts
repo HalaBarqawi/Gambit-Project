@@ -6,7 +6,8 @@ import bodyParser from "body-parser";
 dotenv.config({path:".env"});
 import { router as userRouter } from "./src/routes/customer"; 
 import { router as userRouter1 } from "./src/routes/preference"; 
-import { router as userRouter2 } from "./src/routes/notification"; 
+import { router as userRouter2 } from "./src/routes/notification";
+import { router as userRouter3 } from "./src/routes/trans"; 
 const app:Express=express();
 app.use(cors());
 app.use(morgan("common"));
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(userRouter);
 app.use(userRouter1);
 app.use(userRouter2);
+app.use(userRouter3);
 app.get('/', (req: Request, res: Response): Response => {
     return res.status(200).json({message: 'Hello World!'})
   });

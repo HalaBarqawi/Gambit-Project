@@ -1,27 +1,31 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
-import { Customer } from './customer';
+
 
 export interface TransAttributes {
   Id: number;
-  customer_id: string;
+  customerId: number;
   Date: Date;
   Quantity: number;
   Price_per_Unit: number;
   Discount: number;
   Taxes: number;
   Total_price: number;
+  Total:number;
+  Currency:string;
 }
 
 export class Trans extends Model<TransAttributes> implements TransAttributes {
-    Id!: number;
-    customer_id!: string;
-    Date!: Date;
-    Quantity!: number;
-    Price_per_Unit!: number;
-    Discount!: number;
-    Taxes!: number;
-    Total_price!: number;
+  Id!: number;
+  customerId!: number;
+  Date!: Date;
+  Quantity!: number;
+  Price_per_Unit!: number;
+  Discount!: number;
+  Taxes!: number;
+  Total_price!: number;
+  Total!:number;
+  Currency!:string;
 }
 
 Trans.init(
@@ -33,13 +37,10 @@ Trans.init(
       autoIncrement: true,
     },
 
-    customer_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     Date: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue:DataTypes.NOW()
     },
     Quantity: {
       type: DataTypes.FLOAT,
@@ -61,17 +62,29 @@ Trans.init(
       type: DataTypes.FLOAT,
       defaultValue: 0.0,
     },
- 
+    Currency:{
+      type:DataTypes.STRING,
+
+    },
+    Total:{
+      type:DataTypes.FLOAT,
+      defaultValue:0.0,
+
+    },
+    customerId: {
+      type: DataTypes.INTEGER,
+    },
   },
   {
     sequelize,
+    createdAt: false,
+    updatedAt: false,
     modelName: 'Trans',
     tableName: 'Transaction',
   }
 );
-Customer.hasMany(Trans);
-Trans.belongsTo(Customer, { foreignKey: "customer_id" });
+
 (async () => {
-  await sequelize.sync({  });
+  await sequelize.sync({});
   // Code here
 })();

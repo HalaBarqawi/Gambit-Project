@@ -1,7 +1,7 @@
 import { NotificationAttributes, Notification } from '../models/notification';
 import { Preference } from '../models/preferences';
 
-export async function ViewNotSevice(Id: number) {
+export async function viewNotification(Id: number) {
   let preference = await Preference.findOne({ where: { Id: Id } });
   if (preference) {
     const notification = await Notification.findAll({
@@ -15,7 +15,7 @@ export async function ViewNotSevice(Id: number) {
   }
   return [false, 'No Preference'];
 }
-export async function AddNotService(
+export async function addNotification(
   data: any,
   Id_preferences: number
 ) {
@@ -29,7 +29,7 @@ export async function AddNotService(
   }
   
 }
-export async function EditNotService(
+export async function editNotificationById(
   data: NotificationAttributes,
   Id: number,
   id_notification: number
@@ -44,7 +44,7 @@ export async function EditNotService(
     return true;
   }
 }
-export async function DeleteNotService(Id: number, id_notification: number) {
+export async function deleteNotificationById(Id: number, id_notification: number) {
   const notification = await Notification.findOne({
     where: { Id: id_notification, preference_Id: Id },
   });

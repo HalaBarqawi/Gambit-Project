@@ -1,7 +1,7 @@
 import { Customer } from '../models/customer';
 import { Preference, PrefrenceAttributes } from '../models/preferences';
 
-export async function ViewService(Id: number) {
+export async function viewPreferencs(Id: number) {
   let customer = await Customer.findOne({ where: { Id: Id } });
   if (customer) {
     const preference = await Preference.findAll({
@@ -15,7 +15,7 @@ export async function ViewService(Id: number) {
   }
   return [false, 'No Customer']
 }
-export async function ViewAService(Id: number ,Id_Customer:number) {
+export async function viewPreferenceById(Id: number ,Id_Customer:number) {
   let customer = await Customer.findOne({ where: { Id: Id_Customer } });
   if (customer) {
     const preference = await Preference.findOne({
@@ -29,19 +29,19 @@ export async function ViewAService(Id: number ,Id_Customer:number) {
   }
   return [false, 'No Customer']
 }
-export async function AddService(data: PrefrenceAttributes, Id:number) {
+export async function addPreference(data: PrefrenceAttributes, Id:number) {
   console.log("in service")
   console.log(Id)
   const preference = await Preference.create(data);
   try {
-    preference.customerId= Id,
+    preference.customerId= Id;
     await preference.save(); 
     return [true, preference];
   } catch (e) {
     return e;
   }
 }
-export async function EditService(data: PrefrenceAttributes, Id: number) {
+export async function editPreferenceById(data: PrefrenceAttributes, Id: number) {
   let preference = await Preference.findOne({ where: { Id: Id } });
   if (preference) {
     await Preference.update(
@@ -58,7 +58,7 @@ export async function EditService(data: PrefrenceAttributes, Id: number) {
     return true;
   }
 }
-export async function DeleteService(Id: number) {
+export async function deletePreferenceById(Id: number) {
   const preference = await Preference.findOne({
     where: { Id: Id },
   });
