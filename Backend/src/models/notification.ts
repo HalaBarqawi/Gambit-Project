@@ -39,15 +39,15 @@ Notification.init(
     Receiver: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique:true
+      unique: true,
     },
     Is_Active: {
       type: DataTypes.BOOLEAN,
-      defaultValue:true
+      defaultValue: true,
     },
     Is_ReceiverConfirmed: {
-      type: DataTypes.BOOLEAN, 
-      defaultValue:true
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
     ReceiverConfirmedDate: {
       type: DataTypes.DATE,
