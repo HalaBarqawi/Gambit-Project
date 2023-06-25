@@ -1,7 +1,9 @@
+import { CustomerNotFoundException } from '../exceptions/notFoundCustomer';
+import { PreferenceNotFoundException } from '../exceptions/notFoundPreference';
 import { Customer } from '../models/customer';
 import { Preference, PrefrenceAttributes } from '../models/preferences';
 
-export async function ViewService(Id: number) {
+export async function viewPreferencs(Id: number) {
   let customer = await Customer.findOne({ where: { Id: Id } });
   if (customer) {
     const preference = await Preference.findAll({
@@ -9,23 +11,40 @@ export async function ViewService(Id: number) {
     });
 
     if (!preference) {
-      return [false, 'No Prefrences Found'];
+      throw new PreferenceNotFoundException();
     }
-    return [true, preference];
+    return preference;
   }
-  return [false, 'No Customer']
+  throw new CustomerNotFoundException();
 }
-export async function AddService(data: PrefrenceAttributes, Id:number) {
+export async function viewPreferenceById(Id: number, Id_Customer: number) {
+  let customer = await Customer.findOne({ where: { Id: Id_Customer } });
+  if (customer) {
+    const preference = await Preference.findOne({
+      where: { Id: Id },
+    });
+
+    if (!preference) {
+      throw new PreferenceNotFoundException();
+    }
+    return preference;
+  }
+  throw new CustomerNotFoundException();
+}
+export async function addPreference(data: PrefrenceAttributes, Id: number) {
   const preference = await Preference.create(data);
   try {
-    preference.customerId= Id,
+    preference.customerId = Id;
     await preference.save();
-    return [true, preference];
+    return preference;
   } catch (e) {
     return e;
   }
 }
-export async function EditService(data: PrefrenceAttributes, Id: number) {
+export async function editPreferenceById(
+  data: PrefrenceAttributes,
+  Id: number
+) {
   let preference = await Preference.findOne({ where: { Id: Id } });
   if (preference) {
     await Preference.update(
@@ -39,10 +58,11 @@ export async function EditService(data: PrefrenceAttributes, Id: number) {
         },
       }
     );
-    return true;
+    return preference;
   }
+  throw new PreferenceNotFoundException();
 }
-export async function DeleteService(Id: number) {
+export async function deletePreferenceById(Id: number) {
   const preference = await Preference.findOne({
     where: { Id: Id },
   });
@@ -50,8 +70,6 @@ export async function DeleteService(Id: number) {
   if (!preference) {
     return false;
   }
-
   await preference.destroy();
-
   return true;
 }
