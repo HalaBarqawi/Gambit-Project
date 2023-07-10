@@ -8,7 +8,7 @@ import { router as userRouter } from './src/routes/customer';
 import { router as userRouter1 } from './src/routes/preference';
 import { router as userRouter2 } from './src/routes/notification';
 import { router as userRouter3 } from './src/routes/trans';
-import { exceptionHandler } from './src/exceptions/exceptionHandler';
+import { exceptionHandler } from './src/middleware/exceptionHandler';
 const app: Express = express();
 app.use(cors());
 app.use(morgan('common'));

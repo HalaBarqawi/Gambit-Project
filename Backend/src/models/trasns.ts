@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
 
-
 export interface TransAttributes {
   Id: number;
   customerId: number;
@@ -11,8 +10,8 @@ export interface TransAttributes {
   Discount: number;
   Taxes: number;
   Total_price: number;
-  Total:number;
-  Currency:string;
+  Total: number;
+  Currency: string;
 }
 
 export class Trans extends Model<TransAttributes> implements TransAttributes {
@@ -24,8 +23,8 @@ export class Trans extends Model<TransAttributes> implements TransAttributes {
   Discount!: number;
   Taxes!: number;
   Total_price!: number;
-  Total!:number;
-  Currency!:string;
+  Total!: number;
+  Currency!: string;
 }
 
 Trans.init(
@@ -39,8 +38,7 @@ Trans.init(
 
     Date: {
       type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue:DataTypes.NOW()
+      defaultValue: DataTypes.NOW(),
     },
     Quantity: {
       type: DataTypes.FLOAT,
@@ -62,14 +60,12 @@ Trans.init(
       type: DataTypes.FLOAT,
       defaultValue: 0.0,
     },
-    Currency:{
-      type:DataTypes.STRING,
-
+    Currency: {
+      type: DataTypes.STRING,
     },
-    Total:{
-      type:DataTypes.FLOAT,
-      defaultValue:0.0,
-
+    Total: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.0,
     },
     customerId: {
       type: DataTypes.INTEGER,

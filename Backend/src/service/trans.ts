@@ -1,13 +1,15 @@
 import { Customer } from '../models/customer';
 import { Preference } from '../models/preferences';
 import { Trans, TransAttributes } from '../models/trasns';
-
+import { Op } from 'sequelize';
 export async function addTransaction(data: TransAttributes, Id: number) {
   try {
     const customer = await Customer.findOne({
       where: { Id: Id },
     });
-    const preference:any= await Preference.findOne({where: {Id:Id}})
+    const preference: any = await Preference.findOne({
+      where: { customerId: Id },
+    });
 
     if (!customer) {
       return false;
@@ -15,9 +17,9 @@ export async function addTransaction(data: TransAttributes, Id: number) {
 
     const trans = new Trans(data);
     trans.customerId = Id;
-    trans.Currency=preference.Currency;
-    trans.Total_price=trans.Quantity*trans.Price_per_Unit;
-    trans.Total=(trans.Total_price*trans.Discount)+trans.Taxes;
+    trans.Currency = preference.Currency;
+    trans.Total_price = trans.Quantity * trans.Price_per_Unit;
+    trans.Total = trans.Total_price * trans.Discount + trans.Taxes;
 
     await trans.save();
     return trans;
@@ -26,14 +28,23 @@ export async function addTransaction(data: TransAttributes, Id: number) {
   }
 }
 
-export async function viewTransactions() {
+export async function viewTransactions(pagination: any) {
   try {
-    const TransAll = await Trans.findAll();
+    const { page, size } = pagination;
+
+    const TransAll = await Trans.findAndCountAll({
+      limit: size,
+      offset: page * size,
+    });
 
     if (!TransAll) {
       return false;
     } else {
-      return TransAll;
+      // return TransAll;
+      return {
+        content: TransAll.rows,
+        totalPages: Math.ceil(TransAll.count / Number.parseInt(size)),
+      };
     }
   } catch (e) {
     return e;
@@ -73,8 +84,8 @@ export async function viewTransactionById(id: number, customerId: number) {
 export async function editTransactionById(data: TransAttributes, Id: number) {
   let transaction = await Trans.findOne({ where: { Id: Id } });
   if (transaction) {
-    transaction.Total_price=data.Quantity*data.Price_per_Unit;
-    transaction.Total=(transaction.Total_price*data.Discount)+data.Taxes;
+    transaction.Total_price = data.Quantity * data.Price_per_Unit;
+    transaction.Total = transaction.Total_price * data.Discount + data.Taxes;
     await transaction.update(data);
     return true;
   }
@@ -89,4 +100,38 @@ export async function deleteTransactionById(Id: number) {
   await trans.destroy();
 
   return true;
+}
+export async function filterTransactions(pagination: any, query: any) {
+  try {
+    const quantityNumber: number = Number.parseInt(query.quentity) || 100;
+    const currencyType: any = query.currency;
+    const orderType: String = query.orderBy || 'Quantity';
+    const orderWay: String = query.order || 'ASC';
+
+    const { page, size } = pagination;
+
+    const TransAll = await Trans.findAndCountAll({
+      where: {
+        [Op.or]: {
+          Quantity: { [Op.lt]: quantityNumber },
+          Currency: { [Op.eq]: currencyType },
+        },
+      },
+      order: [[`${orderType}`, `${orderWay}`]],
+      limit: size,
+      offset: page * size,
+    });
+
+    if (!TransAll) {
+      return false;
+    } else {
+      //  return TransAll;
+      return {
+        content: TransAll.rows,
+        totalPages: Math.ceil(TransAll.count / Number.parseInt(size)),
+      };
+    }
+  } catch (e) {
+    return e;
+  }
 }
