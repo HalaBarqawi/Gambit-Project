@@ -20,6 +20,7 @@ export async function postTransaction(req: Request & any, res: Response) {
       success: 1,
       message: 'Create successfully',
       data: transaction,
+      
     });
   }
 }

@@ -103,7 +103,9 @@ export async function deleteTransactionById(Id: number) {
 }
 export async function filterTransactions(pagination: any, query: any) {
   try {
-    const quantityNumber: number = Number.parseInt(query.quentity) || 100;
+    const quantityNumber: number = Number.parseInt(query.quantity) || 1000;
+    const totalPriceNumber: number = Number.parseInt(query.totalPrice) ||0;
+    const totalNumber: number = Number.parseInt(query.total) || 0;
     const currencyType: any = query.currency;
     const orderType: String = query.orderBy || 'Quantity';
     const orderWay: String = query.order || 'ASC';
@@ -112,9 +114,12 @@ export async function filterTransactions(pagination: any, query: any) {
 
     const TransAll = await Trans.findAndCountAll({
       where: {
-        [Op.or]: {
+        [Op.and]: {
           Quantity: { [Op.lt]: quantityNumber },
-          Currency: { [Op.eq]: currencyType },
+          // Currency: { [Op.eq]: currencyType },
+          Total_price:{[Op.gte]:totalPriceNumber},
+         
+        
         },
       },
       order: [[`${orderType}`, `${orderWay}`]],
