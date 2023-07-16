@@ -1,24 +1,24 @@
 import express from 'express';
 import {
-  Add_Notification,
-  delete_Notification,
-  Edit_Notification,
-  view_Notification,
+  postNotification,
+  deleteNotification,
+  editNotification,
+  getNotification,
 } from '../controllers/notification';
 const router = express.Router();
 import { checkToken } from '../middleware/authValidation';
 
-router.get('/preferences/:id/notifications', checkToken, view_Notification);
-router.post('/preferences/:id/notifications', checkToken, Add_Notification);
+router.get('/preferences/:id/notifications', checkToken, getNotification);
+router.post('/preferences/:id/notifications', checkToken, postNotification);
 router.put(
   '/preferences/:id/notifications/:id_notification',
   checkToken,
-  Edit_Notification
+  editNotification
 );
 router.delete(
   '/preferences/:id/notifications/:id_notification',
   checkToken,
-  delete_Notification
+  deleteNotification
 );
 
 export { router };

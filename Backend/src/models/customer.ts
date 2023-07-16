@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
 import { Preference } from './preferences';
+import { Trans } from './trasns';
 
 export interface CustomerAttributes {
   Id: number;
@@ -89,6 +90,7 @@ Customer.init(
   }
 );
 Customer.hasMany(Preference, { onDelete: 'cascade', foreignKey:  "customerId" });
+Customer.hasMany(Trans ,  { onDelete: 'cascade', foreignKey:  "customerId" });
 
 (async () => {
   await sequelize.sync({  });

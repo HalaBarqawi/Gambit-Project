@@ -1,11 +1,28 @@
 import express from 'express';
 const router = express.Router();
-import { Trans_Add, transaction } from '../controllers/trans';
-import checkToken from '../middleware/authValidation';
+import {
+  deleteTransaction,
+  editTransaction,
+  postTransaction,
+  viewAllTransactions,
+  viewTransactionId,
+  getTransactions,
+  getTransactionsByFiltring,
+} from '../controllers/trans';
+import { checkToken } from '../middleware/authValidation';
+import { pagination } from '../middleware/pagination';
 
-router.post('/newTrans/:id',checkToken, Trans_Add);
-router.get('/transaction/:id',checkToken, transaction);
-
-
+router.post('/transactions', checkToken, postTransaction);
+router.get('/transactions/:id', checkToken, viewTransactionId);
+router.get('/transactions', checkToken, pagination, viewAllTransactions);
+router.get('/transactions/', checkToken, getTransactions);
+router.get(
+  '/filterTransactions',
+  checkToken,
+  pagination,
+  getTransactionsByFiltring
+);
+router.put('/transactions/:id', checkToken, editTransaction);
+router.delete('/transactions/:id', checkToken, deleteTransaction);
 
 export { router };
