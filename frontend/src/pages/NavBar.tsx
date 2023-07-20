@@ -34,26 +34,23 @@ export default function Navbar() {
     <nav>
       {(toggleMenu || screenWidth > 500) && (
         <ul className="list">
-           <li className="items" style={{marginRight:100 ,fontWeight:"bold"}}>{"Gambit Bored"}</li>
+          <li
+            className="items"
+            style={{ marginRight: 100, fontWeight: "bold" }}
+          >
+            {"Gambit Bored"}
+          </li>
           <li className="items">
-            <Link
-              to="/Home"
-              relative="path"
-              className="link"           >
+            <Link to="/Home" relative="path" className="link">
               Home
             </Link>
           </li>
           <li className="items">
-            <Link
-              to="/preferences"
-              relative="path"
-              className="link"
-            >
+            <Link to="/preferences" relative="path" className="link">
               Setting
             </Link>
           </li>
-          <li className="items" style={{marginLeft:700}}>
-           
+          <li className="items" style={{ marginLeft: 700 }}>
             <Space direction="vertical">
               <Space>
                 <Button danger type="text" onClick={logout}>

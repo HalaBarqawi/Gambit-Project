@@ -1,4 +1,6 @@
 import PaginationComponent from "../component/pagination";
+import * as ReactBootStrap from "react-bootstrap";
+
 function TransactonCard(props: any) {
   const handlePageClick = async (data: any) => {
     console.log(data.selected);
@@ -6,9 +8,9 @@ function TransactonCard(props: any) {
     let currentPage = data.selected;
     await props.setcurrentPage(currentPage);
 
-    const commentsFormServer = await props.fetchComments(currentPage);
+    const dataFormServer = await props.fetchItems(currentPage);
 
-    await props.setItems(commentsFormServer);
+    await props.setItems(dataFormServer);
   };
   const handlefilterClick = async (data: any) => {
     console.log(data.selected);
@@ -16,55 +18,54 @@ function TransactonCard(props: any) {
     let currentPage = data.selected;
     await props.setcurrentPage(currentPage);
 
-    const commentsFormServer = await props.fetchFilter(currentPage);
+    const dataFormServer = await props.fetchFilter(currentPage);
 
-    await props.setItems(commentsFormServer);
+    await props.setItems(dataFormServer.content);
   };
 
   return (
     <div className="container">
-      <div className="row m-2">
-        {props.items ? (
-          props.items.map((item: any) => {
-            return (
-              <div key={item.Id} className="col-sm-6 col-md-4 v my-2">
-                <div
-                  className="card shadow-sm w-100"
-                  style={{ minHeight: 225 }}
-                >
-                  <div className="card-body">
-                    <h5 className="card-title text-center h2">
-                      Id :{item.Id}{" "}
-                    </h5>
-                    <h6 className="card-subtitle mb-2 text-muted text-center">
-                      Quantity {item.Quantity} , Taxes {item.Price_per_Unit}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted text-center">
-                      Discount {item.Discount} , Taxes {item.Taxes}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted text-center">
-                      Total Price {item.Total_price}
-                    </h6>
-                    <h6 className="card-subtitle mb-2 text-muted text-center">
-                      Total {item.Total}
-                    </h6>
-
-                    <p className="card-text">Currency in {item.Currency}</p>
-                  </div>
-                </div>
+      <div>
+        <ReactBootStrap.Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Quantity</th>
+              <th>Currency</th>
+              <th>Price/Unit</th>
+              <th>Discount</th>
+              <th>Taxes</th>
+              <th>Total price</th>
+              <th>Total </th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.items ? (
+              props.items.map((item: any) => (
+                <tr key={item.Id}>
+                  <td>{item.Id}</td>
+                  <td>{item.Quantity} </td>
+                  <td>{item.Currency}</td>
+                  <td>{item.Price_per_Unit}</td>
+                  <td>{item.Discount}</td>
+                  <td>{item.Taxes}</td>
+                  <td>{item.Total_price}</td>
+                  <td>{item.Total}</td>
+                  <td>{item.Total}</td>
+                </tr>
+              ))
+            ) : (
+              <div>
+                <h4>There is no items </h4>
               </div>
-            );
-          })
-        ) : (
-          <div>
-            <h4>There is no items </h4>
-          </div>
-        )}
+            )}
+          </tbody>
+        </ReactBootStrap.Table>
       </div>
-
       {props.filter ? (
         <PaginationComponent
-          pageCount={props.pageCount}
+          pageCount={props.pageCountFilter}
           pageFunction={handlefilterClick}
         />
       ) : (

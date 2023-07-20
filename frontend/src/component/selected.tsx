@@ -24,9 +24,11 @@ export default function MyComponent(props: any) {
 
   async function apply() {
     const result = await props.fetchFilter();
-    await props.setItems(result);
+    await props.setItems(result.content);
     await props.setFilter(true);
+    await props.setpageCountFilter(result.totalPages);
   }
+
   return (
     <div
       style={{
