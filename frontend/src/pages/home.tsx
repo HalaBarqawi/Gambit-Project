@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../assets/App.css";
 import MyComponent from "../component/selected";
 import { useLogin } from "../context/AuthContext";
+import Login from "./login";
 
 import NavBar from "./NavBar";
 import TransactonCard from "./transactionCard";
@@ -19,8 +19,6 @@ export default function Home() {
   const [filter, setFilter] = useState(false);
   const [currentPage, setcurrentPage] = useState();
   const [pageCountFilter, setpageCountFilter] = useState();
-  const navigate: any = useNavigate();
-
   let limit = 10;
 
   useEffect(() => {
@@ -93,6 +91,9 @@ export default function Home() {
       />
     </div>
   ) : (
-    <div>{navigate("/")}</div>
+    <div>
+      {" "}
+      <Login />{" "}
+    </div>
   );
 }
