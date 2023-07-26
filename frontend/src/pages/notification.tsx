@@ -5,15 +5,19 @@ import Card from "react-bootstrap/Card";
 import { useLocation } from "react-router";
 import { useLogin } from "../context/AuthContext";
 import Navbar from "./NavBar";
+import Login from "./login";
+import AddNotification from "./addNotification";
+
 function NotificationCard() {
   const location = useLocation();
   const items = location.state;
   const [notification, setNotifications] = useState([]);
   const { isLoggedIn, profile }: any = useLogin();
+  const [modal2Open, setModal2Open] = useState(false);
 
   useEffect(() => {
     const getTrans = async () => {
-      const res: Response & any = await fetch(
+      const res = await fetch(
         `http://localhost:8081/preferences/${items.Id}/notifications`,
         {
           headers: { Authorization: `Bearer ${profile}` },
@@ -27,10 +31,12 @@ function NotificationCard() {
 
     getTrans();
   }, []);
+
   function toDate(date: Date) {
-    return date.getFullYear() + " / " + date.getMonth() + "/" + date.getDate();
+    return date.getFullYear() + " / " + (date.getMonth() + 1) + "/" + date.getDate();
   }
-  return (
+
+  return isLoggedIn ? (
     <div>
       <Navbar />
       <h4
@@ -48,7 +54,7 @@ function NotificationCard() {
           danger
           className="text-center"
           style={{ marginLeft: 500 }}
-          onClick={() => {}}
+          onClick={() => setModal2Open(true)}
         >
           ADD
         </Button>
@@ -56,25 +62,22 @@ function NotificationCard() {
       <div className="container">
         <div className="row m-2">
           {notification.length > 0 ? (
-            notification.map((item: any) => {
-              return (
-                <Card className="text-center">
-                  <Card.Header>Notification {item.Id}</Card.Header>
-                  <Card.Body>
-                    <Card.Title>
-                      Notification for Preference with Id : {item.preference_Id}
-                    </Card.Title>
-                    <Card.Text>
-                      Type: {item.Type} , Receiver: {item.Receiver}
-                    </Card.Text>
-                  </Card.Body>
-                  <Card.Footer className="text-muted">
-                    Recieved Date :{" "}
-                    {toDate(new Date(item.ReceiverConfirmedDate))}
-                  </Card.Footer>
-                </Card>
-              );
-            })
+            notification.map((item: any) => (
+              <Card className="text-center" key={item.Id} style={{marginBottom:10}}>
+                <Card.Header>Notification {item.Id}</Card.Header>
+                <Card.Body>
+                  <Card.Title>
+                    Notification for Preference with Id : {item.preference_Id}
+                  </Card.Title>
+                  <Card.Text>
+                    Type: {item.Type} , Receiver: {item.Receiver}
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer className="text-muted">
+                  Received Date : {toDate(new Date(item.ReceiverConfirmedDate))}
+                </Card.Footer>
+              </Card>
+            ))
           ) : (
             <div>
               <h4>There is no notification for this preference </h4>
@@ -82,6 +85,13 @@ function NotificationCard() {
           )}
         </div>
       </div>
+
+{      modal2Open && <AddNotification modal2Open={modal2Open} setModal2Open={setModal2Open} Id={items.Id}/>
+}    </div>
+  ) : (
+    <div>
+      {" "}
+      <Login />{" "}
     </div>
   );
 }

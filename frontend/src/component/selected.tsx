@@ -1,6 +1,7 @@
 import Select from "react-select";
 import { OrderOption, stateOptions } from "../assets/data";
 import { Button, InputNumber, Space } from "antd";
+import { Left } from "react-bootstrap/lib/Media";
 
 export default function MyComponent(props: any) {
   const onChange = (value: any) => {
@@ -32,53 +33,79 @@ export default function MyComponent(props: any) {
   return (
     <div
       style={{
-        marginLeft: 130,
-        marginTop: 20,
+        marginLeft: 90,
+        marginBottom: 40,
+        marginTop: 10,
         display: "flex",
         flexDirection: "row",
-        gap: 10,
+        gap: 20,
       }}
     >
-      <Select
-        className="basic-single"
-        classNamePrefix="select"
-        isClearable={true}
-        // value={props.order}
-        onChange={handleChange}
-        options={stateOptions}
-        placeholder="Order By"
-        defaultValue={stateOptions[1]}
-      />
-      <Select
-        className="basic-single"
-        classNamePrefix="select"
-        isClearable={true}
-        defaultValue={OrderOption[1]}
-        onChange={handlOrderChange}
-        options={OrderOption}
-        placeholder="Order with"
-      />
-      <label style={{ marginTop: 5 }}> Total Price more than :</label>
-      <Space>
-        <InputNumber
-          size="large"
-          min={1}
-          max={100000}
-          defaultValue={3}
-          onChange={onChange}
+      <div>
+        <label style={{ marginTop: 10, marginRight: 10 }}>
+          {" "}
+          Quantity less than :{" "}
+        </label>
+        <Space>
+          <InputNumber
+            size="large"
+            min={1}
+            max={100000}
+            defaultValue={3}
+            onChange={onQuantityChange}
+          />
+        </Space>
+      </div>
+      <div>
+        <label style={{ marginTop: 10, marginRight: 10 }}>
+          {" "}
+          Total Price more than :{" "}
+        </label>
+        <Space>
+          <InputNumber
+            size="large"
+            min={1}
+            max={100000}
+            defaultValue={3}
+            onChange={onChange}
+          />
+        </Space>
+      </div>
+
+      <div
+        style={{
+          marginTop: 10,
+          gap: 20,
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          isClearable={true}
+          // value={props.order}
+          onChange={handleChange}
+          options={stateOptions}
+          placeholder="Order By"
+          defaultValue={stateOptions[1]}
         />
-      </Space>
-      <label style={{ marginTop: 5 }}> Quantity less than :</label>
-      <Space>
-        <InputNumber
-          size="large"
-          min={1}
-          max={100000}
-          defaultValue={3}
-          onChange={onQuantityChange}
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          isClearable={true}
+          defaultValue={OrderOption[1]}
+          onChange={handlOrderChange}
+          options={OrderOption}
+          placeholder="Order with"
         />
-      </Space>
-      <Button type="primary" danger onClick={apply}>
+      </div>
+      <Button
+        type="primary"
+        danger
+        onClick={apply}
+        style={{ height: 38, marginTop: 10 }}
+      >
         Apply
       </Button>
     </div>

@@ -1,16 +1,17 @@
-import { Button } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../context/AuthContext";
 import Navbar from "./NavBar";
 import Card from "react-bootstrap/Card";
-
+import Login from "./login";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import { Button, Modal, Space } from "antd";
 function PreferencesCard() {
-  const { profile }: any = useLogin();
+  const { profile, isLoggedIn }: any = useLogin();
   const [items, setItems]: any = useState([]);
   const navigate = useNavigate();
-
+  const { confirm } = Modal;
   useEffect(() => {
     const getComments = async () => {
       const res: Response & any = await fetch(
@@ -48,7 +49,24 @@ function PreferencesCard() {
   const notificationPref = (Id: any) => {
     navigate("/notification", { state: (Id = { Id }) });
   };
-  return (
+  const showDeleteConfirm = (Id: any) => {
+    confirm({
+      title: "Are you sure delete this preference?",
+      icon: <ExclamationCircleFilled />,
+      content: "",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk() {
+        deletePref(Id);
+        console.log("OK");
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
+  return isLoggedIn ? (
     <div>
       <Navbar />
       <h4
@@ -92,10 +110,10 @@ function PreferencesCard() {
                       Edit
                     </Button>
                     <Button
-                      danger
+                      type="dashed"
                       className="text-center"
                       style={{ marginLeft: 10 }}
-                      onClick={() => deletePref(item.Id)}
+                      onClick={() => showDeleteConfirm(item.Id)}
                     >
                       Delete
                     </Button>
@@ -121,6 +139,11 @@ function PreferencesCard() {
           )}
         </div>
       </div>
+    </div>
+  ) : (
+    <div>
+      {" "}
+      <Login />{" "}
     </div>
   );
 }

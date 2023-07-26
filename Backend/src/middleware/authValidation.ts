@@ -13,7 +13,7 @@ export const checkToken = async (
     // Remove Bearer from string
     token = token.slice(7);
 
-    const decoded = jwt.verify(token, 'secret') as JwtPayload;
+    const decoded = await jwt.verify(token, 'secret') as JwtPayload;
     const user = await Customer.findByPk(decoded.id);
 
     console.log(decoded.Id);

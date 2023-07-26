@@ -22,6 +22,7 @@ export default function App() {
           <Route path="/addPref" element={<AddPref />} />
           <Route path="/editPref" element={<EditPref />} />
           <Route path="/notification" element={<NotificationCard />} />
+
         </Routes>
       </Router>
     </LoginProvider>

@@ -77,6 +77,7 @@ import { Button, Form, Input, Select } from "antd";
 import type { FormInstance } from "antd/es/form";
 import Navbar from "./NavBar";
 import axios from "axios";
+import Login from "./login";
 
 const { Option } = Select;
 
@@ -115,7 +116,7 @@ export default function EditPref() {
     formRef.current?.resetFields();
   };
 
-  return isLoggedIn ? (
+  return (isLoggedIn ? (
     <div>
       <Navbar />
       <h4 style={{ marginTop: 60 }}> Updatr Preference</h4>
@@ -164,7 +165,8 @@ export default function EditPref() {
     </div>
   ) : (
     <div>
-      <h1>Unauthorized</h1>
-    </div>
-  );
+    {" "}
+    <Login />{" "}
+  </div>
+  ));
 }

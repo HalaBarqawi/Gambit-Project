@@ -3,6 +3,7 @@ import "../assets/App.css";
 import MyComponent from "../component/selected";
 import { useLogin } from "../context/AuthContext";
 import Login from "./login";
+import Card from "react-bootstrap/Card";
 
 import NavBar from "./NavBar";
 import TransactonCard from "./transactionCard";
@@ -19,6 +20,7 @@ export default function Home() {
   const [filter, setFilter] = useState(false);
   const [currentPage, setcurrentPage] = useState();
   const [pageCountFilter, setpageCountFilter] = useState();
+
   let limit = 10;
 
   useEffect(() => {
@@ -62,8 +64,10 @@ export default function Home() {
     <div className="App">
       <NavBar />
 
-      <h1 style={{ marginTop: 70, marginRight: 1000 }}> Transaction : </h1>
-      <h5 style={{ marginTop: 20, marginRight: 1150 }}> Filters : </h5>
+      <h3 style={{ marginTop: 70, marginBottom:40  }}>   <Card.Header > Transactions List</Card.Header></h3>
+     
+
+     
 
       <MyComponent
         order={order}
@@ -90,10 +94,9 @@ export default function Home() {
         fetchFilter={fetchFilter}
       />
     </div>
-  ) : (
-    <div>
-      {" "}
-      <Login />{" "}
-    </div>
+  ) : (    <div>
+    {" "}
+    <Login />{" "}
+  </div>
   );
 }

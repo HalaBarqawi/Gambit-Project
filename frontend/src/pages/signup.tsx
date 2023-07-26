@@ -57,142 +57,169 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <Shared
-      text1={"Register"}
-      text2={"Sign up to our system"}
-      children={
-        <Form
-          {...formItemLayout}
-          form={form}
-          name="register"
-          onFinish={onFinish}
-          initialValues={{}}
-          style={{ maxWidth: 600 }}
-          scrollToFirstError
+    <Layout
+      className="layout "
+      style={{ backgroundColor: "#73337d", height: 750 }}
+    >
+      <Row style={{ height: "85vh", alignItems: "center" }}>
+        <Col
+          xs={{
+            span: 22,
+            offset: 1,
+          }}
+          md={{
+            span: 8,
+            offset: 8,
+          }}
         >
-          <Form.Item
-            name="email"
-            label="E-mail"
-            rules={[
-              {
-                type: "email",
-                message: "The input is not valid E-mail!",
-              },
-              {
-                required: true,
-                message: "Please input your E-mail!",
-              },
-            ]}
+          <div
+            style={{
+              backgroundColor: "#c99fc9",
+              borderRadius: 25,
+              padding: 30,
+              boxShadow: "3px 3px 6px rgba(0, 0, 0, 0.2)",
+              opacity: "0.8",
+            }}
           >
-            <Input />
-          </Form.Item>
+            <h2
+              className="text-center font"
+              style={{ marginBottom: 30, color: "#fff" }}
+            >
+              Sign up to our board
+            </h2>
 
-          <Form.Item
-            name="password"
-            label="Password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password />
-          </Form.Item>
+            <Form
+              {...formItemLayout}
+              form={form}
+              name="register"
+              onFinish={onFinish}
+              initialValues={{}}
+              style={{ maxWidth: 600 }}
+              scrollToFirstError
+            >
+              <Form.Item
+                name="email"
+                label="E-mail"
+                rules={[
+                  {
+                    type: "email",
+                    message: "The input is not valid E-mail!",
+                  },
+                  {
+                    required: true,
+                    message: "Please input your E-mail!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
 
-          <Form.Item
-            name="confirm"
-            label="Confirm Password"
-            dependencies={["password"]}
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Please confirm your password!",
-              },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error(
-                      "The two passwords that you entered do not match!"
-                    )
-                  );
-                },
-              }),
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
+              <Form.Item
+                name="password"
+                label="Password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password />
+              </Form.Item>
 
-          <Form.Item
-            name="UserName"
-            label="UserName"
-            tooltip="What do you want userName looklike!"
-            rules={[
-              {
-                required: true,
-                message: "Please input your UserName!",
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="FirstName"
-            label="FirstName"
-            rules={[
-              {
-                required: true,
-                message: "Please input your FirstName!",
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="LastName"
-            label="LastName"
-            rules={[
-              {
-                required: true,
-                message: "Please input your LastName!",
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value
-                    ? Promise.resolve()
-                    : Promise.reject(new Error("Should accept agreement")),
-              },
-            ]}
-            {...tailFormItemLayout}
-          >
-            <Checkbox>
-              I have read the <a href="">agreement</a>
-            </Checkbox>
-          </Form.Item>
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
-              Register
-            </Button>
-          </Form.Item>
-        </Form>
-      }
-    />
+              <Form.Item
+                name="confirm"
+                label="Confirm Password"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: "Please confirm your password!",
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          "The two passwords that you entered do not match!"
+                        )
+                      );
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
+
+              <Form.Item
+                name="UserName"
+                label="UserName"
+                tooltip="What do you want userName looklike!"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your UserName!",
+                    whitespace: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="FirstName"
+                label="FirstName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your FirstName!",
+                    whitespace: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="LastName"
+                label="LastName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your LastName!",
+                    whitespace: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="agreement"
+                valuePropName="checked"
+                rules={[
+                  {
+                    validator: (_, value) =>
+                      value
+                        ? Promise.resolve()
+                        : Promise.reject(new Error("Should accept agreement")),
+                  },
+                ]}
+                {...tailFormItemLayout}
+              >
+                I already have an account <a href="/">Log in</a>
+              </Form.Item>
+              <Form.Item {...tailFormItemLayout}>
+                <Button danger type="primary" htmlType="submit">
+                  Register
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+    </Layout>
   );
 };
 

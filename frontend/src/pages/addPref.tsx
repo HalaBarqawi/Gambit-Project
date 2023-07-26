@@ -2,10 +2,11 @@ import "../assets/App.css";
 import { useLogin } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Alert, Button, Form, Input, Modal, Select } from "antd";
 import type { FormInstance } from "antd/es/form";
 import Navbar from "./NavBar";
 import axios from "axios";
+import Login from "./login";
 
 const { Option } = Select;
 
@@ -19,7 +20,6 @@ const tailLayout = {
 };
 export default function AddPref() {
   const { isLoggedIn, profile }: any = useLogin();
-
   const formRef = React.useRef<FormInstance>(null);
 
   const onFinish = async (values: any) => {
@@ -34,6 +34,9 @@ export default function AddPref() {
     );
 
     if (response) {
+      Modal.success({
+        content: 'Added Successfully',
+      });
       console.log(response);
     }
   };
@@ -42,7 +45,7 @@ export default function AddPref() {
     formRef.current?.resetFields();
   };
 
-  return isLoggedIn ? (
+  return  (isLoggedIn ? (
     <div>
       <Navbar />
       <h4 style={{ marginTop: 60 }}> Add new Preference</h4>
@@ -98,7 +101,8 @@ export default function AddPref() {
     </div>
   ) : (
     <div>
-      <h1>Unauthorized</h1>
-    </div>
-  );
+    {" "}
+    <Login />{" "}
+  </div>
+  ));
 }
