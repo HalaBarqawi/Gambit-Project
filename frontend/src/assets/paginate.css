@@ -1,0 +1,49 @@
+ .page {
+    border-radius: 30px;
+    margin: 0 3px;
+    border: none;
+    padding: .375rem .75rem;
+    color: #474d56;
+ }
+ .page:hover {
+    color: #474d56;
+    background-color: #eef2f7;
+ }
+ .page:focus {
+    color: #2966bd;
+    background-color: #eef2f7;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.1rem rgb(54 136 252 / 25%);
+    box-shadow: 0 0 0 0.1rem rgb(54 136 252 / 25%);
+ }
+ .disabled {
+    color: #98a6ad;
+    pointer-events: none;
+ }
+ .active {
+    color: #fff;
+    background-color: #3688fc;
+    border-color: #3688fc;
+ }
+ .previous {
+    color: #474d56;
+    padding: .375rem .75rem;
+    margin: 0 3px;
+ }
+ .break {
+    color: #474d56;
+    padding: 10px;
+ }
+ .next {
+    color: #474d56;
+    padding: .375rem .75rem;
+    margin: 0;
+ }
+ .recordCount {
+    text-align: right;
+ }
+ .nextLink {
+    text-decoration: none;
+    color: #474d56;
+    
+ }

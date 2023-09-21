@@ -1,43 +1,70 @@
-// import { LinkContainer } from "react-router-bootstrap";
-// import Navbar from "react-bootstrap/Navbar"; // change Nav to Navbar
-// import Nav from "react-bootstrap/Nav";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../assets/Navbar.css";
+import { Space, Button } from "antd";
+import { useLogin } from "../context/AuthContext";
+export default function Navbar() {
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-// export default function NavBar() {
-//     return (
-//       <div className="App container py-3">
-//         <Navbar collapseOnSelect bg="light" expand="md" className="mb-3 px-3">
-//           <LinkContainer to="/">
-//             <Navbar.Brand className="fw-bold text-muted">Scratch</Navbar.Brand>
-//           </LinkContainer>
-//           <Navbar.Toggle />
-//           <Navbar.Collapse className="justify-content-end">
-//             <Nav activeKey={window.location.pathname}>
-//               <LinkContainer to="/signup">
-//                 <Nav.Link>Signup</Nav.Link>
-//               </LinkContainer>
-//               <LinkContainer to="/">
-//                 <Nav.Link>Login</Nav.Link>
-//               </LinkContainer>
-//             </Nav>
-//           </Navbar.Collapse>
-//         </Navbar>
-//       </div>
-//     );
-// }
-import React from 'react';
-import { Button, Space } from 'antd';
+  const { setIsLoggedIn, setProfile }: any = useLogin();
+  const navigate = useNavigate();
+  function logout() {
+    setIsLoggedIn(false);
+    setProfile({});
+    navigate("/");
+  }
+  const toggleNav = () => {
+    setToggleMenu(!toggleMenu);
+  };
 
-const App: React.FC = () => (
-  <Space direction="vertical">
- 
-    <Space>
-      <Button danger type="text">
-        Logout
-      </Button>
-      </Space>
-    
-  </Space>
+  useEffect(() => {
+    const changeWidth = () => {
+      setScreenWidth(window.innerWidth);
+    };
 
-);
+    window.addEventListener("resize", changeWidth);
 
-export default App;
+    return () => {
+      window.removeEventListener("resize", changeWidth);
+    };
+  }, []);
+
+  return (
+    <nav>
+      {(toggleMenu || screenWidth > 500) && (
+        <ul className="list">
+          <li
+            className="items"
+            style={{ marginRight: 100, fontWeight: "bold" }}
+          >
+            {"Gambit Bored"}
+          </li>
+          <li className="items">
+            <Link to="/Home" relative="path" className="link">
+              Home
+            </Link>
+          </li>
+          <li className="items">
+            <Link to="/preferences" relative="path" className="link">
+              Setting
+            </Link>
+          </li>
+          <li className="items" style={{ marginLeft: 700 }}>
+            <Space direction="vertical">
+              <Space>
+                <Button danger type="text" onClick={logout}>
+                  Logout
+                </Button>
+              </Space>
+            </Space>
+          </li>
+        </ul>
+      )}
+
+      <button onClick={toggleNav} className="btn">
+        BTN
+      </button>
+    </nav>
+  );
+}
